@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-08-12 09:55-0700\n"
+"PO-Revision-Date: 2011-12-21 22:30-0800\n"
+"Last-Translator: Mike Holly <mikejholly@gmail.com>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: strutta/strutta.admin.inc:11
+msgid "CSV file"
+msgstr "Archivo CVS"
+
+#: strutta/strutta.admin.inc:12
+msgid "Please make sure the file is formatted correctly (Name, E-mail)"
+msgstr "Por favor asegúrese de que el archivo tenga el fomato correcto (Nombre, E-mail)"
+
+#: strutta/strutta.admin.inc:18
+msgid "From address"
+msgstr "Dirección"
+
+#: strutta/strutta.admin.inc:25
+msgid "Plain text"
+msgstr "Texto plano"
+
+#: strutta/strutta.admin.inc:26
+msgid "HTML markup"
+msgstr "Formato HTML"
+
+#: strutta/strutta.admin.inc:28
+msgid "Content type"
+msgstr "Tipo de contenido"
+
+#: strutta_contests_client/strutta_contests_client.module:1381
+msgid ""
+"There is a limit of <strong>1 vote</strong> per entry over <strong>!period</strong>. \n"
+"      <br>Please come back and vote again in <strong>!retry</strong>."
+msgstr ""
+"Hay un límite de <strong>1 voto</strong> por entrada <strong>!period</strong>. \n"
+"      <br>Por favor vuelve más tarde para votar<strong>!retry</strong>.\""
+
+#: strutta_submit/strutta_submit.module:113
+msgid "@count entry"
+msgid_plural "@count entries"
+msgstr[0] "@count entrada"
+msgstr[1] "@count entradas"
+
