@@ -47,4 +47,3 @@ msgid "@count entry"
 msgid_plural "@count entries"
 msgstr[0] "@count entrada"
 msgstr[1] "@count entradas"
-
