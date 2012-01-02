@@ -1,7 +1,6 @@
 var po = require('../lib/po.js')
   , fs = require('fs')
   , assert = require('assert')
-  , exec = require('child_process').exec;
   
 po.load('text.po', function(_po){
   _po.save('copy.po', function(){
