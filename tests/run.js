@@ -1,12 +1,11 @@
-var po = require('../lib/po.js')
+var PO = require('../lib/po.js')
   , fs = require('fs')
   , assert = require('assert')
-  
-po.load('text.po', function(_po){
-  _po.save('copy.po', function(){
-    var orig = fs.readFileSync('text.po');
-    var data = fs.readFileSync('copy.po');
-    assert.equal(orig, data, 'Saved data is identical to original.');
-  });
+
+PO.load('text.po', function(po) {
+  assert.equal(po.headers['Plural-Forms'], 'nplurals=2; plural=(n!=1);', 'Parsed "Plural-Forms" header.');
+  assert.equal(po.items.length, 67, 'Successfully parsed 67 items.');
+  var item = po.items.pop();
+  assert.equal(item.comments.length, 1, 'Parsed item comment.');
 });
-  
+
