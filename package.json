@@ -1,7 +1,7 @@
 {
   "name"          : "node-po",
   "description"   : "Simple library for loading and saving Gettext PO files.",
-  "version"       : "0.1.0",
+  "version"       : "0.1.1",
   "author"        : "Mike Holly",
   "homepage"      : "http://github.com/mikejholly/node-po",
   "repository"    : {"type" : "git", "url" : "http://github.com/mikejholly/node-po.git"},

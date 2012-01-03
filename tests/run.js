@@ -7,5 +7,6 @@ PO.load('text.po', function(po) {
   assert.equal(po.items.length, 67, 'Successfully parsed 67 items.');
   var item = po.items.pop();
   assert.equal(item.comments.length, 1, 'Parsed item comment.');
+  po.save('copy.po');
 });
 
