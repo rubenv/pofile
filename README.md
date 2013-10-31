@@ -1,6 +1,6 @@
 Used to load and save PO files.
 
-    var po = require('po')  
+    var po = require('node-po')  
       , fs = require('fs')
     
     po.load('text.po', function(_po){
