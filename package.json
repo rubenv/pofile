@@ -1,11 +1,24 @@
 {
-  "name"          : "node-po",
-  "description"   : "Simple library for loading and saving Gettext PO files.",
-  "version"       : "0.1.1",
-  "author"        : "Mike Holly",
-  "homepage"      : "http://github.com/mikejholly/node-po",
-  "repository"    : {"type" : "git", "url" : "http://github.com/mikejholly/node-po.git"},
-  "dependencies"  : [],
-  "main"          : "./lib/po",
-  "keywords"      : ["i18n", "l10n", "gettext", "mo", "po"]
+  "name": "node-po",
+  "description": "Simple library for loading and saving Gettext PO files.",
+  "version": "0.1.1",
+  "author": "Mike Holly",
+  "homepage": "http://github.com/mikejholly/node-po",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mikejholly/node-po.git"
+  },
+  "main": "./lib/po",
+  "keywords": [
+    "i18n",
+    "l10n",
+    "gettext",
+    "mo",
+    "po"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "~0.7.2"
+  }
 }
