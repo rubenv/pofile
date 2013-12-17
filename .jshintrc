@@ -10,5 +10,10 @@
   "boss": true,
   "eqnull": true,
   "node": true,
-  "white": true
+  "white": true,
+  "predef": [
+    "describe",
+    "it",
+    "before"
+  ]
 }
