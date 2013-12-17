@@ -1,7 +1,7 @@
 var assert = require('assert');
 var PO = require('..');
 
-describe('Message parsing', function () {
+describe('Comments', function () {
     var po;
 
     before(function (done) {
