@@ -33,4 +33,21 @@ describe('Parse', function () {
         assert.equal(item.msgstr, "Attribut title, en tant que texte brut");
         assert.deepEqual(item.comments, ["Comment"]);
     });
+
+    it('Handles string references', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/reference.po', 'utf8'));
+        assert.notEqual(po, null);
+        assert.equal(po.items.length, 2);
+        
+        var item = po.items[0];
+        assert.equal(item.msgid, "Title, as plain text");
+        assert.equal(item.msgstr, "Attribut title, en tant que texte brut");
+        assert.deepEqual(item.comments, ["Comment"]);
+        assert.deepEqual(item.references, [".tmp/crm/controllers/map.js"]);
+        
+        item = po.items[1];
+        assert.equal(item.msgid, "X");
+        assert.equal(item.msgstr, "Y");
+        assert.deepEqual(item.references, ["a", "b"]);
+    });
 });
