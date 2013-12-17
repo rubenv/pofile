@@ -50,4 +50,16 @@ describe('Parse', function () {
         assert.equal(item.msgstr, "Y");
         assert.deepEqual(item.references, ["a", "b"]);
     });
+
+    it('Parses flags', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/fuzzy.po', 'utf8'));
+        assert.notEqual(po, null);
+        assert.equal(po.items.length, 1);
+
+        var item = po.items[0];
+        assert.equal(item.msgid, "Sources");
+        assert.equal(item.msgstr, "Source");
+        assert.notEqual(item.flags, null);
+        assert.equal(item.flags.fuzzy, true);
+    });
 });
