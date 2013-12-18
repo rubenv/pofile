@@ -23,4 +23,18 @@ describe('Write', function () {
         var str = po.toString();
         assertHasLine(str, "#, fuzzy");
     });
+
+    it('write msgid', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/fuzzy.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+        assertHasLine(str, "msgid \"Sources\"");
+    });
+
+    it('write msgstr', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/fuzzy.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+        assertHasLine(str, "msgstr \"Source\"");
+    });
 });

@@ -24,5 +24,8 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-mocha-cli": "~1.4.0"
+  },
+  "dependencies": {
+    "lodash.isarray": "~2.4.1"
   }
 }
