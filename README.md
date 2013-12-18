@@ -1,14 +1,16 @@
 Used to load and save PO files.
 
-    var po = require('node-po')  
-      , fs = require('fs')
-    
-    po.load('text.po', function(_po){
-      console.log(_po.headers);
-      console.log(_po.items);
-      
-      _po.save('copy.po', function(){
+```js
+var PO = require('node-po');
+
+PO.load('text.po', function (err, po) {
+    // Handle err if needed
+    console.log(po.headers);
+    console.log(po.items);
+  
+    po.save('copy.po', function (err) {
+        // Handle err if needed
         console.log('We copied a PO file for no reason!');
-      });
     });
-    
+});
+```
