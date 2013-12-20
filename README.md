@@ -1,7 +1,7 @@
 Used to load and save PO files.
 
 ```js
-var PO = require('node-po');
+var PO = require('pofile');
 
 PO.load('text.po', function (err, po) {
     // Handle err if needed
@@ -14,3 +14,7 @@ PO.load('text.po', function (err, po) {
     });
 });
 ```
+
+## Credits
+
+  Originally based on node-po (written by Michael Holly).

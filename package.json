@@ -1,12 +1,19 @@
 {
-  "name": "node-po",
+  "name": "pofile",
   "description": "Parse and serialize Gettext PO files.",
   "version": "0.1.1",
-  "author": "Mike Holly",
-  "homepage": "http://github.com/mikejholly/node-po",
+  "author": {
+    "name": "Ruben Vermeersch",
+    "email": "ruben@savanne.be",
+    "url": "http://savanne.be/"
+  },
+  "contributors": [
+      "Mike Holly"
+  ],
+  "homepage": "http://github.com/rubenv/pofile",
   "repository": {
     "type": "git",
-    "url": "http://github.com/mikejholly/node-po.git"
+    "url": "http://github.com/rubenv/pofile.git"
   },
   "main": "./lib/po",
   "keywords": [
@@ -18,6 +25,9 @@
   ],
   "scripts": {
     "test": "grunt test"
+  },
+  "directories": {
+    "test": "test"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
