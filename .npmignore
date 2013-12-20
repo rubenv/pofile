@@ -2,3 +2,6 @@
 /dist
 /Gruntfile.coffee
 /test
+/.jshintrc
+/.travis.yml
+/bower.json
