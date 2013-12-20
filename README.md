@@ -17,4 +17,6 @@ PO.load('text.po', function (err, po) {
 
 ## Credits
 
-  Originally based on node-po (written by Michael Holly).
+  Originally based on node-po (written by Michael Holly). Rebranded because
+  node-po is unmaintained and because this library is no longer limited to
+  Node.JS: it works in the browser too.
