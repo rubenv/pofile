@@ -1,9 +1,15 @@
 module.exports = (grunt) ->
+    @loadNpmTasks('grunt-browserify')
+    @loadNpmTasks('grunt-contrib-clean')
     @loadNpmTasks('grunt-contrib-jshint')
+    @loadNpmTasks('grunt-contrib-uglify')
     @loadNpmTasks('grunt-contrib-watch')
     @loadNpmTasks('grunt-mocha-cli')
 
     @initConfig
+        clean:
+            dist: ['dist']
+
         jshint:
             all: [ 'lib/*.js', 'test/*.js' ]
             options:
@@ -23,6 +29,18 @@ module.exports = (grunt) ->
                 options:
                     reporter: 'spec'
 
+        browserify:
+            dist:
+                files:
+                    'dist/pofile.js': ['lib/po.js']
+                options:
+                    alias: 'lib/po.js:pofile'
+
+        uglify:
+            dist:
+                files:
+                    'dist/pofile.min.js': 'dist/pofile.js'
+
     @registerTask 'default', ['test']
-    @registerTask 'build', ['jshint']
+    @registerTask 'build', ['clean', 'jshint', 'browserify', 'uglify']
     @registerTask 'test', ['build', 'mochacli']

@@ -1,0 +1,24 @@
+{
+  "name": "pofile",
+  "version": "0.1.1",
+  "authors": [
+    "Ruben Vermeersch <ruben@rocketeer.be>"
+  ],
+  "description": "Parse and serialize Gettext PO files.",
+  "main": "dist/pofile.js",
+  "keywords": [
+    "i18n",
+    "l10n",
+    "gettext",
+    "mo",
+    "po"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "lib",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}
