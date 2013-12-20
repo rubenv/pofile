@@ -1,5 +1,6 @@
 module.exports = (grunt) ->
     @loadNpmTasks('grunt-browserify')
+    @loadNpmTasks('grunt-bump')
     @loadNpmTasks('grunt-contrib-clean')
     @loadNpmTasks('grunt-contrib-jshint')
     @loadNpmTasks('grunt-contrib-uglify')
@@ -40,6 +41,12 @@ module.exports = (grunt) ->
             dist:
                 files:
                     'dist/pofile.min.js': 'dist/pofile.js'
+
+        bump:
+            options:
+                files: ['package.json', 'bower.json']
+                commitFiles: ['-a']
+                pushTo: 'origin'
 
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint', 'browserify', 'uglify']
