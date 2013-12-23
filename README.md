@@ -5,21 +5,100 @@
 [![Build Status](https://travis-ci.org/rubenv/pofile.png?branch=master)](https://travis-ci.org/rubenv/pofile)
 
 ## Usage
+Add pofile to your project:
+
+### Installation (Node.JS, browser via Browserified)
+```
+npm install --save pofile
+```
+
+Reference it in your code:
 
 ```js
 var PO = require('pofile');
+```
 
+### Installation (via bower)
+```
+bower install --save pofile
+```
+
+Add it to your HTML file:
+
+```html
+<script src="bower_components/pofile/dist/pofile.js"></script>
+```
+
+Reference it in your code:
+
+```js
+var PO = require('pofile');
+```
+
+### Loading and parsing
+
+You can create a new empty PO file by using the class:
+
+```js
+var po = new PO();
+```
+
+Or by loading a file (Node.JS only):
+
+```js
 PO.load('text.po', function (err, po) {
     // Handle err if needed
-    console.log(po.headers);
-    console.log(po.items);
-  
-    po.save('copy.po', function (err) {
-        // Handle err if needed
-        console.log('We copied a PO file for no reason!');
-    });
+    // Do things with po
 });
 ```
+
+Or by parsing a string:
+
+```js
+var po = PO.parse(myString);
+```
+
+### The PO class
+
+The `PO` class exposes three members:
+
+* `comments`: An array of comments (found at the header of the file).
+* `headers`: A dictionary of the headers.
+* `items`: An array of `PO.Item` objects, each of which represents a string
+  from the gettext catalog.
+
+There are two methods available:
+
+* `save`: Accepts a filename and callback, writes the po file to disk.
+
+```js
+po.save('out.po', function (err) {
+    // Handle err if needed
+});
+```
+
+* `toString`: Serializes the po file to a string.
+
+### The PO.Item class
+
+The `PO` class exposes the following members:
+
+* `msgid`: The message id.
+* `msgid_plural`: The plural message id (null if absent).
+* `msgstr`: An array of translated strings. Items that have no plural msgid
+  only have one element in this array.
+* `references`: An array of reference strings.
+* `comments`: An array of string comments.
+* `flags`: A dictionary of the string flags. Each flag is mapped to a key with
+  value true. For instance, a string with the fuzzy flag set will have
+  `item.flags.fuzzy == true`.
+
+
+## Contributing
+
+In lieu of a formal styleguide, take care to maintain the existing coding
+style. Add unit tests for any new or changed functionality. Lint and test your
+code using [Grunt](http://gruntjs.com/).
 
 ## Credits
 
