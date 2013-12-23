@@ -23,17 +23,40 @@ PO.load('text.po', function (err, po) {
 
 ## Credits
 
-  Originally based on node-po (written by Michael Holly). Rebranded because
-  node-po is unmaintained and because this library is no longer limited to
-  Node.JS: it works in the browser too.
+Originally based on node-po (written by Michael Holly). Rebranded because
+node-po is unmaintained and because this library is no longer limited to
+Node.JS: it works in the browser too.
 
-  Changes compared to node-po:
+### Changes compared to node-po
 
-  * Proper handling of async methods that won't crash your Node.JS process when
-    something goes wrong.
-  * Support for parsing string flags (e.g. fuzzy).
-  * A test suite.
-  * Browser support (through Browserified and bower).
+* Proper handling of async methods that won't crash your Node.JS process when
+  something goes wrong.
+* Support for parsing string flags (e.g. fuzzy).
+* A test suite.
+* Browser support (through Browserified and bower).
+
+### Migrating from node-po
+
+You'll need to update the module reference: `require('pofile')` instead of
+`require('node-po')`.
+
+At the initial release, node-po and pofile have identical APIs, with one small
+exception: the `save` and `load` methods now take a callback that has an `err`
+parameter: `(err)` for `save` and `(err, po)` for `load`. This is similar to
+Node.JS conventions.
+
+Change code such as:
+
+```js
+PO.load('text.po', function (po) {
+```
+
+To:
+
+```js
+PO.load('text.po', function (err, po) {
+    // Handle err if needed
+```
 
 ## License 
 
