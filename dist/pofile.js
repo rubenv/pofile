@@ -1,4 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"W8CkM0":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"+dPpep":[function(require,module,exports){
 var fs = require('fs'),
     isArray = require('lodash.isarray');
 
@@ -140,6 +140,10 @@ PO.parse = function (data) {
             item.msgstr[plural] = extract(line);
             context = 'msgstr';
         }
+        else if (line.match(/^msgctxt/)) { // Context
+            finish();
+            item.msgctxt = extract(line);
+        }
         else { // Probably multiline string or blank
             if (line.length > 0) {
                 if (context === 'msgstr') {
@@ -161,6 +165,7 @@ PO.parse = function (data) {
 
 PO.Item = function () {
     this.msgid = '';
+    this.msgctxt = '';
     this.references = [];
     this.msgid_plural = null;
     this.msgstr = [];
@@ -199,7 +204,7 @@ PO.Item.prototype.toString = function () {
         lines.push('#, ' + flags.join(","));
     }
 
-    ['msgid', 'msgid_plural', 'msgstr'].forEach(function (keyword) {
+    ['msgctxt', 'msgid', 'msgid_plural', 'msgstr'].forEach(function (keyword) {
         var text = that[keyword];
         if (text != null) {
             if (isArray(text) && text.length > 1) {
@@ -220,7 +225,7 @@ PO.Item.prototype.toString = function () {
 module.exports = PO;
 
 },{"fs":3,"lodash.isarray":4}],"pofile":[function(require,module,exports){
-module.exports=require('W8CkM0');
+module.exports=require('+dPpep');
 },{}],3:[function(require,module,exports){
 
 },{}],4:[function(require,module,exports){
@@ -306,4 +311,4 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{}]},{},["W8CkM0"])
+},{}]},{},["+dPpep"])

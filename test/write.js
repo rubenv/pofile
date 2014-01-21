@@ -37,4 +37,11 @@ describe('Write', function () {
         var str = po.toString();
         assertHasLine(str, "msgstr \"Source\"");
     });
+
+    it('write msgctxt', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+        assertHasLine(str, 'msgctxt "folder action"');
+    });
 });
