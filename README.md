@@ -142,7 +142,7 @@ PO.load('text.po', function (err, po) {
 
     (The MIT License)
 
-    Copyright (C) 2013 by Ruben Vermeersch <ruben@rocketeer.be>
+    Copyright (C) 2013-2014 by Ruben Vermeersch <ruben@rocketeer.be>
     Copyright (C) 2012 by Michael Holly
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
