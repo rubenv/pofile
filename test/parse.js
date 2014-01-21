@@ -6,7 +6,7 @@ describe('Parse', function () {
     it('Parses the big po file', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8'));
         assert.notEqual(po, null);
-        assert.equal(po.items.length, 67);
+        assert.equal(po.items.length, 69);
         
         var item = po.items[0];
         assert.equal(item.msgid, "Title");
@@ -61,5 +61,16 @@ describe('Parse', function () {
         assert.equal(item.msgstr, "Source");
         assert.notEqual(item.flags, null);
         assert.equal(item.flags.fuzzy, true);
+    });
+
+    it('Parses item context', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8'));
+
+        var ambiguousItems = po.items.filter(function (item) {
+            return item.msgid === 'Empty folder';
+        });
+
+        assert.equal(ambiguousItems[0].msgctxt, 'folder display');
+        assert.equal(ambiguousItems[1].msgctxt, 'folder action');
     });
 });

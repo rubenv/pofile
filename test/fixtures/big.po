@@ -285,3 +285,13 @@ msgstr "Attribut 'title' du lien"
 # Comment
 msgid "Title, as plain text"
 msgstr "Attribut title, en tant que texte brut"
+
+# Empty should be adjective
+msgctxt "folder display"
+msgid "Empty folder"
+msgstr "This folder is empty."
+
+# Empty should be verb
+msgctxt "folder action"
+msgid "Empty folder"
+msgstr "Make this folder empty."
