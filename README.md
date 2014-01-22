@@ -92,7 +92,7 @@ The `PO` class exposes the following members:
 * `flags`: A dictionary of the string flags. Each flag is mapped to a key with
   value true. For instance, a string with the fuzzy flag set will have
   `item.flags.fuzzy == true`.
-* `msgctxt`: context of the message, an arbitrary string, can be used for disambiguation
+* `msgctxt`: Context of the message, an arbitrary string, can be used for disambiguation.
 
 
 ## Contributing
