@@ -38,10 +38,28 @@ describe('Write', function () {
         assertHasLine(str, "msgstr \"Source\"");
     });
 
-    it('write msgctxt', function () {
-        var input = fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8');
-        var po = PO.parse(input);
-        var str = po.toString();
-        assertHasLine(str, 'msgctxt "folder action"');
+    describe('msgctxt', function () {
+        it('should write context field to file', function () {
+            var input = fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8');
+            var po = PO.parse(input);
+            var str = po.toString();
+            assertHasLine(str, 'msgctxt "folder action"');
+        });
+
+        it('should ignore omitted context field', function () {
+            var po = new PO();
+            var item = new PO.Item();
+            po.items.push(item);
+            assert.ok(po.toString().indexOf('msgctxt') < 0);
+        });
+
+        it('should write empty context field', function () {
+            var po = new PO();
+            var item = new PO.Item();
+
+            item.msgctxt = '';
+            po.items.push(item);
+            assert.ok(po.toString().indexOf('msgctxt') >= 0);
+        });
     });
 });
