@@ -165,7 +165,7 @@ PO.parse = function (data) {
 
 PO.Item = function () {
     this.msgid = '';
-    this.msgctxt = '';
+    this.msgctxt = null;
     this.references = [];
     this.msgid_plural = null;
     this.msgstr = [];
