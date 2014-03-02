@@ -42,7 +42,14 @@ describe('Write', function () {
         var input = fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8');
         var po = PO.parse(input);
         var str = po.toString();
-        assertHasLine(str, "# Comment");
+        assertHasLine(str, "# Translator comment");
+    });
+
+    it('write extracted comment', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+        assertHasLine(str, '#. Extracted comment');
     });
 
     describe('msgctxt', function () {

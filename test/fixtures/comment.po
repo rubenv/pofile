@@ -15,6 +15,7 @@ msgstr ""
 "Language: fr\n"
 "X-Generator: Poedit 1.6.2\n"
 
-# Comment
+# Translator comment
+#. Extracted comment
 msgid "Title, as plain text"
 msgstr "Attribut title, en tant que texte brut"

@@ -23,7 +23,7 @@ describe('Parse', function () {
         assert.equal(item.msgstr, "Les ébauches de jetons suivantes peuvent être utilisées à la fois dans les chemins et dans les titres. Lorsqu'elles sont utilisées dans un chemin ou un titre, elles seront remplacées par les valeurs appropriées.");
     });
 
-    it('Handles string comments', function () {
+    it('Handles translator comments', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8'));
         assert.notEqual(po, null);
         assert.equal(po.items.length, 1);
@@ -31,7 +31,18 @@ describe('Parse', function () {
         var item = po.items[0];
         assert.equal(item.msgid, "Title, as plain text");
         assert.equal(item.msgstr, "Attribut title, en tant que texte brut");
-        assert.deepEqual(item.comments, ["Comment"]);
+        assert.deepEqual(item.comments, ["Translator comment"]);
+    });
+
+    it('Handles extracted comments', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8'));
+        assert.notEqual(po, null);
+        assert.equal(po.items.length, 1);
+
+        var item = po.items[0];
+        assert.equal(item.msgid, "Title, as plain text");
+        assert.equal(item.msgstr, "Attribut title, en tant que texte brut");
+        assert.deepEqual(item.extractedComments, ["Extracted comment"]);
     });
 
     it('Handles string references', function () {
