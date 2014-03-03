@@ -88,7 +88,8 @@ The `PO` class exposes the following members:
 * `msgstr`: An array of translated strings. Items that have no plural msgid
   only have one element in this array.
 * `references`: An array of reference strings.
-* `comments`: An array of string comments.
+* `comments`: An array of string translator comments.
+* `extractedComments`: An array of string extracted comments.
 * `flags`: A dictionary of the string flags. Each flag is mapped to a key with
   value true. For instance, a string with the fuzzy flag set will have
   `item.flags.fuzzy == true`.

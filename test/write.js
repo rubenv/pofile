@@ -38,6 +38,20 @@ describe('Write', function () {
         assertHasLine(str, "msgstr \"Source\"");
     });
 
+    it('write translator comment', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+        assertHasLine(str, "# Translator comment");
+    });
+
+    it('write extracted comment', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+        assertHasLine(str, '#. Extracted comment');
+    });
+
     describe('msgctxt', function () {
         it('should write context field to file', function () {
             var input = fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8');
