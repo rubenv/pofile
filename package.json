@@ -8,8 +8,11 @@
     "url": "http://savanne.be/"
   },
   "contributors": [
+    "Eyal Lewinsohn",
+    "Gabe Gorelick",
     "Julian Bäume",
-    "Mike Holly"
+    "Mike Holly",
+    "Sander Houttekier"
   ],
   "homepage": "http://github.com/rubenv/pofile",
   "repository": {
