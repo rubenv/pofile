@@ -52,6 +52,22 @@ describe('Write', function () {
         assertHasLine(str, '#. Extracted comment');
     });
 
+    describe('C-Strings', function () {
+        it('should escape "', function () {
+            var item = new PO.Item();
+
+            item.msgid = '" should be written escaped';
+            assertHasLine(item.toString(), 'msgid "\\" should be written escaped"');
+        });
+
+        it('shoudl escape \\', function () {
+            var item = new PO.Item();
+
+            item.msgid = '\\ should be written escaped';
+            assertHasLine(item.toString(), 'msgid "\\\\ should be written escaped"');
+        });
+    });
+
     describe('msgctxt', function () {
         it('should write context field to file', function () {
             var input = fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8');
