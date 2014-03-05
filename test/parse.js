@@ -84,4 +84,21 @@ describe('Parse', function () {
         assert.equal(ambiguousItems[0].msgctxt, 'folder display');
         assert.equal(ambiguousItems[1].msgctxt, 'folder action');
     });
+
+    describe('C-Strings', function () {
+        it('should parse the c-strings.po file', function () {
+            var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8'));
+
+            assert.notEqual(po, null);
+        });
+
+        it('should extract strings containing " and \\ characters', function () {
+            var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8'));
+
+            var items = po.items.filter(function (item) {
+                return (/^The name field must not contain/).test(item.msgid);
+            });
+            assert.equal(items[0].msgid, 'The name field must not contain characters like " or \\');
+        });
+    });
 });

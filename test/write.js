@@ -66,6 +66,14 @@ describe('Write', function () {
             item.msgid = '\\ should be written escaped';
             assertHasLine(item.toString(), 'msgid "\\\\ should be written escaped"');
         });
+
+        it('should write identical file after parsing a file', function () {
+            var input = fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8');
+            var po = PO.parse(input);
+            var str = po.toString();
+
+            assert.equal(str, input);
+        });
     });
 
     describe('msgctxt', function () {
