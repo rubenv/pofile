@@ -182,6 +182,12 @@ PO.Item.prototype.toString = function () {
     var lines = [],
         that = this;
 
+    // reverse what extract(string) method during PO.parse does
+    var _escape = function (string) {
+        string = string.replace(/\\/g, '\\\\');
+        return string.replace(/"/g, '\\"');
+    };
+
     var _process = function (keyword, text, i) {
         var lines = [],
             parts = text.split(/\n/),
@@ -189,11 +195,11 @@ PO.Item.prototype.toString = function () {
         if (parts.length > 1) {
             lines.push(keyword + index + ' ""');
             parts.forEach(function (part) {
-                lines.push('"' + part + '"');
+                lines.push('"' + _escape(part) + '"');
             });
         }
         else {
-            lines.push(keyword + index + ' "' + text + '"');
+            lines.push(keyword + index + ' "' + _escape(text) + '"');
         }
         return lines;
     };
