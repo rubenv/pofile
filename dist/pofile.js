@@ -90,12 +90,15 @@ PO.parse = function (data) {
 
     var item = new PO.Item(),
         context = null,
-        plural = 0;
+        plural = 0,
+        obsolete = false;
 
     function finish() {
         if (item.msgid.length > 0) {
             po.items.push(item);
             item = new PO.Item();
+            item.obsolete = obsolete;
+            obsolete = false;
         }
     }
 
@@ -110,6 +113,14 @@ PO.parse = function (data) {
     while (lines.length > 0) {
         var line = trim(lines.shift()),
             add = false;
+
+        if (line.match(/^#\~/)) { // Obsolete item
+            obsolete = true;
+            line = trim(line.substring(2));
+        } else {
+            obsolete = false;
+        }
+
         if (line.match(/^#:/)) { // Reference
             finish();
             item.references.push(trim(line.replace(/^#:/, '')));
@@ -176,6 +187,7 @@ PO.Item = function () {
     this.comments = []; // translator comments
     this.extractedComments = [];
     this.flags = {};
+    this.obsolete = false;
 };
 
 PO.Item.prototype.toString = function () {
@@ -245,7 +257,11 @@ PO.Item.prototype.toString = function () {
         }
     });
 
-    return lines.join("\n");
+    if (this.obsolete) {
+        return "#~ " + lines.join("\n#~ ");
+    } else {
+        return lines.join("\n");
+    }
 };
 
 module.exports = PO;

@@ -85,6 +85,21 @@ describe('Parse', function () {
         assert.equal(ambiguousItems[1].msgctxt, 'folder action');
     });
 
+    it('Handles obsolete items', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/commented.po', 'utf8'));
+
+        assert.equal(po.items.length, 2);
+        var item = po.items[0];
+        assert.equal(item.obsolete, false);
+        assert.equal(item.msgid, "{{dataLoader.data.length}} results");
+        assert.equal(item.msgstr, "{{dataLoader.data.length}} resultaten");
+
+        item = po.items[1];
+        assert.equal(item.obsolete, true);
+        assert.equal(item.msgid, "Add order");
+        assert.equal(item.msgstr, "Order toevoegen");
+    });
+
     describe('C-Strings', function () {
         it('should parse the c-strings.po file', function () {
             var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8'));

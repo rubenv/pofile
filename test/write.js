@@ -52,6 +52,15 @@ describe('Write', function () {
         assertHasLine(str, '#. Extracted comment');
     });
 
+    it('write obsolete items', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/commented.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+
+        assertHasLine(str, '#~ msgid "Add order"');
+        assertHasLine(str, '#~ msgstr "Order toevoegen"');
+    });
+
     describe('C-Strings', function () {
         it('should escape "', function () {
             var item = new PO.Item();
