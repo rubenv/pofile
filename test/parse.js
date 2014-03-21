@@ -23,6 +23,14 @@ describe('Parse', function () {
         assert.equal(item.msgstr, "Les ébauches de jetons suivantes peuvent être utilisées à la fois dans les chemins et dans les titres. Lorsqu'elles sont utilisées dans un chemin ou un titre, elles seront remplacées par les valeurs appropriées.");
     });
 
+    it('Handles multi-line headers', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/multi-line.po', 'utf8'));
+        assert.notEqual(po, null);
+        assert.equal(po.items.length, 1);
+
+        assert.equal(po.headers['Plural-Forms'], 'nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;');
+    });
+
     it('Handles translator comments', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8'));
         assert.notEqual(po, null);
