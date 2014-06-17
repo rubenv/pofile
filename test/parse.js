@@ -99,13 +99,13 @@ describe('Parse', function () {
         assert.equal(po.items.length, 2);
         var item = po.items[0];
         assert.equal(item.obsolete, false);
-        assert.equal(item.msgid, "{{dataLoader.data.length}} results");
-        assert.equal(item.msgstr, "{{dataLoader.data.length}} resultaten");
+        assert.equal(item.msgid, '{{dataLoader.data.length}} results');
+        assert.equal(item.msgstr, '{{dataLoader.data.length}} resultaten');
 
         item = po.items[1];
         assert.equal(item.obsolete, true);
-        assert.equal(item.msgid, "Add order");
-        assert.equal(item.msgstr, "Order toevoegen");
+        assert.equal(item.msgid, 'Add order');
+        assert.equal(item.msgstr, 'Order toevoegen');
     });
 
     describe('C-Strings', function () {
