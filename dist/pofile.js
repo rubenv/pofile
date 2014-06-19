@@ -1,6 +1,6 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"W8CkM0":[function(require,module,exports){
-var fs = require('fs'),
-    isArray = require('lodash.isarray');
+var fs = require('fs');
+var isArray = require('lodash.isarray');
 
 function trim(string) {
     return string.replace(/^\s+|\s+$/g, '');
@@ -17,8 +17,7 @@ PO.prototype.save = function (filename, callback) {
 };
 
 PO.prototype.toString = function () {
-    var lines = [],
-        that = this;
+    var lines = [];
 
     if (this.comments) {
         this.comments.forEach(function (comment) {
@@ -30,8 +29,9 @@ PO.prototype.toString = function () {
     lines.push('msgstr ""');
 
     var keys = Object.keys(this.headers);
+    var self = this;
     keys.forEach(function (key) {
-        lines.push('"' + key + ': ' + that.headers[key] + '\\n"');
+        lines.push('"' + key + ': ' + self.headers[key] + '\\n"');
     });
 
     lines.push('');
@@ -41,7 +41,7 @@ PO.prototype.toString = function () {
         lines.push('');
     });
 
-    return lines.join("\n");
+    return lines.join('\n');
 };
 
 PO.load = function (filename, callback) {
@@ -57,10 +57,10 @@ PO.load = function (filename, callback) {
 PO.parse = function (data) {
     //support both unix and windows newline formats.
     data = data.replace(/\r\n/g, '\n');
-    var po = new PO(),
-        sections = data.split(/\n\n/),
-        headers = sections.shift(),
-        lines = sections.join("\n").split(/\n/);
+    var po = new PO();
+    var sections = data.split(/\n\n/);
+    var headers = sections.shift();
+    var lines = sections.join('\n').split(/\n/);
 
     po.headers = {
         'Project-Id-Version': '',
@@ -92,24 +92,28 @@ PO.parse = function (data) {
         }
         if (header.match(/^"/)) {
             header = header.trim().replace(/^"/, '').replace(/\\n"$/, '');
-            var p = header.split(/:/),
-                name = p.shift().trim(),
-                value = p.join(':').trim();
+            var p = header.split(/:/);
+            var name = p.shift().trim();
+            var value = p.join(':').trim();
             po.headers[name] = value;
         }
     });
 
-    var item = new PO.Item(),
-        context = null,
-        plural = 0,
-        obsolete = false;
+    var item = new PO.Item();
+    var context = null;
+    var plural = 0;
+    var obsoleteCount = 0;
+    var noCommentLineCount = 0;
 
     function finish() {
         if (item.msgid.length > 0) {
+            if (obsoleteCount >= noCommentLineCount) {
+                item.obsolete = true;
+            }
+            obsoleteCount = 0;
+            noCommentLineCount = 0;
             po.items.push(item);
             item = new PO.Item();
-            item.obsolete = obsolete;
-            obsolete = false;
         }
     }
 
@@ -122,66 +126,68 @@ PO.parse = function (data) {
     }
 
     while (lines.length > 0) {
-        var line = trim(lines.shift()),
-            add = false;
+        var line = trim(lines.shift());
+        var lineObsolete = false;
+        var add = false;
 
         if (line.match(/^#\~/)) { // Obsolete item
-            obsolete = true;
+            //only remove the obsolte comment mark, here
+            //might be, this is a new item, so
+            //only remember, this line is marked obsolete, count after line is parsed
             line = trim(line.substring(2));
-        } else {
-            obsolete = false;
+            lineObsolete = true;
         }
 
         if (line.match(/^#:/)) { // Reference
             finish();
             item.references.push(trim(line.replace(/^#:/, '')));
-        }
-        else if (line.match(/^#,/)) { // Flags
+        } else if (line.match(/^#,/)) { // Flags
             finish();
-            var flags = trim(line.replace(/^#,/, '')).split(",");
+            var flags = trim(line.replace(/^#,/, '')).split(',');
             for (var i = 0; i < flags.length; i++) {
                 item.flags[flags[i]] = true;
             }
-        }
-        else if (line.match(/^#\s+/)) { // Translator comment
+        } else if (line.match(/^#\s+/)) { // Translator comment
             finish();
             item.comments.push(trim(line.replace(/^#\s+/, '')));
-        }
-        else if (line.match(/^#\./)) { // Extracted comment
+        } else if (line.match(/^#\./)) { // Extracted comment
             finish();
             item.extractedComments.push(trim(line.replace(/^#\./, '')));
-        }
-        else if (line.match(/^msgid_plural/)) { // Plural form
+        } else if (line.match(/^msgid_plural/)) { // Plural form
             item.msgid_plural = extract(line);
             context = 'msgid_plural';
-        }
-        else if (line.match(/^msgid/)) { // Original
+            noCommentLineCount++;
+        } else if (line.match(/^msgid/)) { // Original
             finish();
             item.msgid = extract(line);
             context = 'msgid';
-        }
-        else if (line.match(/^msgstr/)) { // Translation
+            noCommentLineCount++;
+        } else if (line.match(/^msgstr/)) { // Translation
             var m = line.match(/^msgstr\[(\d+)\]/);
             plural = m && m[1] ? parseInt(m[1]) : 0;
             item.msgstr[plural] = extract(line);
             context = 'msgstr';
-        }
-        else if (line.match(/^msgctxt/)) { // Context
+            noCommentLineCount++;
+        } else if (line.match(/^msgctxt/)) { // Context
             finish();
             item.msgctxt = extract(line);
-        }
-        else { // Probably multiline string or blank
+            noCommentLineCount++;
+        } else { // Probably multiline string or blank
             if (line.length > 0) {
+                noCommentLineCount++;
                 if (context === 'msgstr') {
                     item.msgstr[plural] += extract(line);
-                }
-                else if (context === 'msgid') {
+                } else if (context === 'msgid') {
                     item.msgid += extract(line);
-                }
-                else if (context === 'msgid_plural') {
+                } else if (context === 'msgid_plural') {
                     item.msgid_plural += extract(line);
                 }
             }
+        }
+
+        if (lineObsolete) {
+            // Count obsolete lines for this item
+            obsoleteCount++;
         }
     }
     finish();
@@ -202,8 +208,8 @@ PO.Item = function () {
 };
 
 PO.Item.prototype.toString = function () {
-    var lines = [],
-        that = this;
+    var lines = [];
+    var self = this;
 
     // reverse what extract(string) method during PO.parse does
     var _escape = function (string) {
@@ -212,16 +218,15 @@ PO.Item.prototype.toString = function () {
     };
 
     var _process = function (keyword, text, i) {
-        var lines = [],
-            parts = text.split(/\n/),
-            index = typeof i !== 'undefined' ? '[' + i + ']' : '';
+        var lines = [];
+        var parts = text.split(/\n/);
+        var index = typeof i !== 'undefined' ? '[' + i + ']' : '';
         if (parts.length > 1) {
             lines.push(keyword + index + ' ""');
             parts.forEach(function (part) {
                 lines.push('"' + _escape(part) + '"');
             });
-        }
-        else {
+        } else {
             lines.push(keyword + index + ' "' + _escape(text) + '"');
         }
         return lines;
@@ -244,29 +249,25 @@ PO.Item.prototype.toString = function () {
 
     var flags = Object.keys(this.flags);
     if (flags.length > 0) {
-        lines.push('#, ' + flags.join(","));
+        lines.push('#, ' + flags.join(','));
     }
+    var mkObsolete = this.obsolete ? '#~ ' : '';
 
     ['msgctxt', 'msgid', 'msgid_plural', 'msgstr'].forEach(function (keyword) {
-        var text = that[keyword];
+        var text = self[keyword];
         if (text != null) {
             if (isArray(text) && text.length > 1) {
                 text.forEach(function (t, i) {
-                    lines = lines.concat(_process(keyword, t, i));
+                    lines = lines.concat(mkObsolete + _process(keyword, t, i));
                 });
-            }
-            else {
+            } else {
                 text = isArray(text) ? text.join() : text;
-                lines = lines.concat(_process(keyword, text));
+                lines = lines.concat(mkObsolete + _process(keyword, text));
             }
         }
     });
 
-    if (this.obsolete) {
-        return "#~ " + lines.join("\n#~ ");
-    } else {
-        return lines.join("\n");
-    }
+    return lines.join('\n');
 };
 
 module.exports = PO;

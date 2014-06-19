@@ -5,6 +5,7 @@ module.exports = (grunt) ->
     @loadNpmTasks('grunt-contrib-jshint')
     @loadNpmTasks('grunt-contrib-uglify')
     @loadNpmTasks('grunt-contrib-watch')
+    @loadNpmTasks('grunt-jscs-checker')
     @loadNpmTasks('grunt-mocha-cli')
 
     @initConfig
@@ -15,6 +16,13 @@ module.exports = (grunt) ->
             all: [ 'lib/*.js', 'test/*.js' ]
             options:
                 jshintrc: '.jshintrc'
+
+        jscs:
+            src:
+                options:
+                    config: '.jscs.json'
+                files:
+                    src: [ 'lib/*.js', 'test/*.js' ]
 
         watch:
             all:
@@ -49,5 +57,5 @@ module.exports = (grunt) ->
                 pushTo: 'origin'
 
     @registerTask 'default', ['test']
-    @registerTask 'build', ['clean', 'jshint', 'browserify', 'uglify']
+    @registerTask 'build', ['clean', 'jshint', 'jscs', 'browserify', 'uglify']
     @registerTask 'test', ['build', 'mochacli']

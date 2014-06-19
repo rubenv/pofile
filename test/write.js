@@ -3,7 +3,7 @@ var fs = require('fs');
 var PO = require('..');
 
 function assertHasLine(str, line) {
-    var lines = str.split("\n");
+    var lines = str.split('\n');
     var found = false;
 
     for (var i = 0; i < lines.length; i++) {
@@ -13,7 +13,7 @@ function assertHasLine(str, line) {
         }
     }
 
-    assert(found, "Could not find line: " + line);
+    assert(found, 'Could not find line: ' + line);
 }
 
 describe('Write', function () {
@@ -21,28 +21,28 @@ describe('Write', function () {
         var input = fs.readFileSync(__dirname + '/fixtures/fuzzy.po', 'utf8');
         var po = PO.parse(input);
         var str = po.toString();
-        assertHasLine(str, "#, fuzzy");
+        assertHasLine(str, '#, fuzzy');
     });
 
     it('write msgid', function () {
         var input = fs.readFileSync(__dirname + '/fixtures/fuzzy.po', 'utf8');
         var po = PO.parse(input);
         var str = po.toString();
-        assertHasLine(str, "msgid \"Sources\"");
+        assertHasLine(str, 'msgid "Sources"');
     });
 
     it('write msgstr', function () {
         var input = fs.readFileSync(__dirname + '/fixtures/fuzzy.po', 'utf8');
         var po = PO.parse(input);
         var str = po.toString();
-        assertHasLine(str, "msgstr \"Source\"");
+        assertHasLine(str, 'msgstr "Source"');
     });
 
     it('write translator comment', function () {
         var input = fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8');
         var po = PO.parse(input);
         var str = po.toString();
-        assertHasLine(str, "# Translator comment");
+        assertHasLine(str, '# Translator comment');
     });
 
     it('write extracted comment', function () {
