@@ -19,3 +19,11 @@ msgstr ""
 #. Extracted comment
 msgid "Title, as plain text"
 msgstr "Attribut title, en tant que texte brut"
+
+#
+#.
+#:
+#, fuzzy
+msgid "Empty comment"
+msgstr "Empty"
+

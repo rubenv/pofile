@@ -31,10 +31,24 @@ describe('Parse', function () {
         assert.equal(po.headers['Plural-Forms'], 'nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;');
     });
 
+    it('Handle empty comments', function (done) {
+        PO.load(__dirname + '/fixtures/comment.po', function (err, po) {
+            assert.equal(err, null);
+
+            var item = po.items[1];
+            assert.equal(item.msgid, 'Empty comment');
+            assert.equal(item.msgstr, 'Empty');
+            assert.deepEqual(item.comments, ['']);
+            assert.deepEqual(item.extractedComments, ['']);
+            assert.deepEqual(item.references, ['']);
+            done();
+        });
+    });
+
     it('Handles translator comments', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8'));
         assert.notEqual(po, null);
-        assert.equal(po.items.length, 1);
+        assert.equal(po.items.length, 2);
 
         var item = po.items[0];
         assert.equal(item.msgid, 'Title, as plain text');
@@ -45,7 +59,7 @@ describe('Parse', function () {
     it('Handles extracted comments', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8'));
         assert.notEqual(po, null);
-        assert.equal(po.items.length, 1);
+        assert.equal(po.items.length, 2);
 
         var item = po.items[0];
         assert.equal(item.msgid, 'Title, as plain text');
