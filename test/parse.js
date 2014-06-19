@@ -96,7 +96,7 @@ describe('Parse', function () {
     it('Handles obsolete items', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/commented.po', 'utf8'));
 
-        assert.equal(po.items.length, 2);
+        assert.equal(po.items.length, 4);
         var item = po.items[0];
         assert.equal(item.obsolete, false);
         assert.equal(item.msgid, '{{dataLoader.data.length}} results');
@@ -106,6 +106,16 @@ describe('Parse', function () {
         assert.equal(item.obsolete, true);
         assert.equal(item.msgid, 'Add order');
         assert.equal(item.msgstr, 'Order toevoegen');
+
+        item = po.items[2];
+        assert.equal(item.obsolete, true);
+        assert.equal(item.msgid, 'Commented item');
+        assert.equal(item.msgstr, 'not sure');
+
+        item = po.items[3];
+        assert.equal(item.obsolete, true);
+        assert.equal(item.msgid, 'Second commented item');
+        assert.equal(item.msgstr, 'also not sure');
     });
 
     describe('C-Strings', function () {

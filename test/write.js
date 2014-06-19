@@ -61,6 +61,22 @@ describe('Write', function () {
         assertHasLine(str, '#~ msgstr "Order toevoegen"');
     });
 
+    it('write obsolete items with comment', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/commented.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+
+        //this is what msgcat tool of gettext does: don't print #~ for comments
+        assertHasLine(str, '# commented obsolete item');
+        assertHasLine(str, '#, fuzzy');
+
+        //items made obsolete by commenting every keyword with #~
+        assertHasLine(str, '#~ msgid "Commented item"');
+        assertHasLine(str, '#~ msgstr "not sure"');
+        assertHasLine(str, '#~ msgid "Second commented item"');
+        assertHasLine(str, '#~ msgstr "also not sure"');
+    });
+
     describe('C-Strings', function () {
         it('should escape "', function () {
             var item = new PO.Item();
