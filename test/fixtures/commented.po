@@ -21,3 +21,13 @@ msgstr "{{dataLoader.data.length}} resultaten"
 
 #~ msgid "Add order"
 #~ msgstr "Order toevoegen"
+
+#~ # commented obsolete item
+#~ #, fuzzy
+#~ msgid "Commented item"
+#~ msgstr "not sure"
+
+# commented obsolete item
+#, fuzzy
+#~ msgid "Second commented item"
+#~ msgstr "also not sure"
