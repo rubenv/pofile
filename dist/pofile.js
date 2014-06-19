@@ -147,9 +147,9 @@ PO.parse = function (data) {
             for (var i = 0; i < flags.length; i++) {
                 item.flags[flags[i]] = true;
             }
-        } else if (line.match(/^#\s+/)) { // Translator comment
+        } else if (line.match(/^#($|\s+)/)) { // Translator comment
             finish();
-            item.comments.push(trim(line.replace(/^#\s+/, '')));
+            item.comments.push(trim(line.replace(/^#($|\s+)/, '')));
         } else if (line.match(/^#\./)) { // Extracted comment
             finish();
             item.extractedComments.push(trim(line.replace(/^#\./, '')));
