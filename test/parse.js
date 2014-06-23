@@ -133,19 +133,29 @@ describe('Parse', function () {
     });
 
     describe('C-Strings', function () {
+        var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8'));
         it('should parse the c-strings.po file', function () {
-            var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8'));
-
             assert.notEqual(po, null);
         });
 
         it('should extract strings containing " and \\ characters', function () {
-            var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8'));
-
             var items = po.items.filter(function (item) {
                 return (/^The name field must not contain/).test(item.msgid);
             });
             assert.equal(items[0].msgid, 'The name field must not contain characters like " or \\');
+        });
+
+        it('should handle \n characters', function () {
+            var item = po.items[1];
+            assert.equal(item.msgid, '%1$s\n%2$s %3$s\n%4$s\n%5$s');
+        });
+
+        it('should handle \t characters', function () {
+            var item = po.items[2];
+            assert.equal(item.msgid, 'define(\'some/test/module\', function () {\n' +
+                '\t\'use strict\';\n' +
+                '\treturn {};\n' +
+                '});\n');
         });
     });
 });
