@@ -92,6 +92,15 @@ describe('Write', function () {
             assertHasLine(item.toString(), 'msgid "\\\\ should be written escaped"');
         });
 
+        it('should escape \\n', function () {
+            var item = new PO.Item();
+
+            item.msgid = '\n should be written escaped';
+            assertHasLine(item.toString(), 'msgid ""');
+            assertHasLine(item.toString(), '""');
+            assertHasLine(item.toString(), '" should be written escaped"');
+        });
+
         it('should write identical file after parsing a file', function () {
             var input = fs.readFileSync(__dirname + '/fixtures/c-strings.po', 'utf8');
             var po = PO.parse(input);
