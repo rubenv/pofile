@@ -17,3 +17,43 @@ msgstr ""
 
 msgid "The name field must not contain characters like \" or \\"
 msgstr ""
+
+# possibility to reorder items depending on locale
+#. Format of addresses
+#. %1$s is the street
+#. %2$s is the postal code
+#. %3$s is the city
+#. %4$s is the state
+#. %5$s is the country
+msgid ""
+"%1$s\n"
+"%2$s %3$s\n"
+"%4$s\n"
+"%5$s"
+msgstr ""
+
+# "i18"ned code
+#. used in <pre> environment, so don't remove any control sequences
+msgid ""
+"define('some/test/module', function () {\n"
+"\t'use strict';\n"
+"\treturn {};\n"
+"});\n"
+""
+msgstr ""
+"define('random/test/file', function () {\n"
+"\t'use strict';\n"
+"\treturn {};\n"
+"});\n"
+""
+
+# all one-letter escape characters
+# be aware, that \a, \b, \v, \f and \r should not be used
+# in i18ned messages (according to gettext tools)
+# however, they should be properly parsed, anyway
+msgid ""
+"\a\b\t\n"
+"\v\f\r"
+msgstr ""
+"\a\b\t\n"
+"\v\f\r"

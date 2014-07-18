@@ -97,7 +97,7 @@ describe('Write', function () {
 
             item.msgid = '\n should be written escaped';
             assertHasLine(item.toString(), 'msgid ""');
-            assertHasLine(item.toString(), '""');
+            assertHasLine(item.toString(), '"\\n"');
             assertHasLine(item.toString(), '" should be written escaped"');
         });
 
