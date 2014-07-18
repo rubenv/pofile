@@ -120,8 +120,32 @@ PO.parse = function (data) {
     function extract(string) {
         string = trim(string);
         string = string.replace(/^[^"]*"|"$/g, '');
-        string = string.replace(/\\"/g, '"');
-        string = string.replace(/\\\\/g, '\\');
+        string = string.replace(/\\([abtnvfr'"\\?]|([0-7]{3})|x([0-9a-fA-F]{2}))/g, function (match, esc, oct, hex) {
+            if (oct) {
+                return String.fromCharCode(parseInt(oct, 8));
+            }
+            if (hex) {
+                return String.fromCharCode(parseInt(hex, 16));
+            }
+            switch (esc) {
+                case 'a':
+                    return '\x07';
+                case 'b':
+                    return '\b';
+                case 't':
+                    return '\t';
+                case 'n':
+                    return '\n';
+                case 'v':
+                    return '\v';
+                case 'f':
+                    return '\f';
+                case 'r':
+                    return '\r';
+                default:
+                    return esc;
+            }
+        });
         return string;
     }
 
@@ -213,8 +237,27 @@ PO.Item.prototype.toString = function () {
 
     // reverse what extract(string) method during PO.parse does
     var _escape = function (string) {
-        string = string.replace(/\\/g, '\\\\');
-        return string.replace(/"/g, '\\"');
+        // don't unescape \n, since string can never contain it
+        // since split('\n') is called on it
+        string = string.replace(/[\x07\b\t\v\f\r"\\]/g, function (match) {
+            switch (match) {
+                case '\x07':
+                    return '\\a';
+                case '\b':
+                    return '\\b';
+                case '\t':
+                    return '\\t';
+                case '\v':
+                    return '\\v';
+                case '\f':
+                    return '\\f';
+                case '\r':
+                    return '\\r';
+                default:
+                    return '\\' + match;
+            }
+        });
+        return string;
     };
 
     var _process = function (keyword, text, i) {
@@ -263,6 +306,10 @@ PO.Item.prototype.toString = function () {
             } else {
                 text = isArray(text) ? text.join() : text;
                 var processed = _process(keyword, text);
+                //handle \n in single-line texts (can not be handled in _escape)
+                for (var i = 1; i < processed.length - 1; i++) {
+                    processed[i] = processed[i].slice(0, -1) + '\\n"';
+                }
                 lines = lines.concat(mkObsolete + processed.join('\n' + mkObsolete));
             }
         }
