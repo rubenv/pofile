@@ -67,21 +67,32 @@ describe('Parse', function () {
         assert.deepEqual(item.extractedComments, ['Extracted comment']);
     });
 
-    it('Handles string references', function () {
+    describe('Handles string references', function () {
         var po = PO.parse(fs.readFileSync(__dirname + '/fixtures/reference.po', 'utf8'));
         assert.notEqual(po, null);
-        assert.equal(po.items.length, 2);
+        assert.equal(po.items.length, 3);
 
-        var item = po.items[0];
-        assert.equal(item.msgid, 'Title, as plain text');
-        assert.equal(item.msgstr, 'Attribut title, en tant que texte brut');
-        assert.deepEqual(item.comments, ['Comment']);
-        assert.deepEqual(item.references, ['.tmp/crm/controllers/map.js']);
+        it('in simple cases', function () {
+            var item = po.items[0];
+            assert.equal(item.msgid, 'Title, as plain text');
+            assert.equal(item.msgstr, 'Attribut title, en tant que texte brut');
+            assert.deepEqual(item.comments, ['Comment']);
+            assert.deepEqual(item.references, ['.tmp/crm/controllers/map.js']);
+        });
 
-        item = po.items[1];
-        assert.equal(item.msgid, 'X');
-        assert.equal(item.msgstr, 'Y');
-        assert.deepEqual(item.references, ['a', 'b']);
+        it('with two different references', function () {
+            var item = po.items[1];
+            assert.equal(item.msgid, 'X');
+            assert.equal(item.msgstr, 'Y');
+            assert.deepEqual(item.references, ['a', 'b']);
+        });
+
+        it('and does not process reference items', function () {
+            var item = po.items[2];
+            assert.equal(item.msgid, 'Z');
+            assert.equal(item.msgstr, 'ZZ');
+            assert.deepEqual(item.references, ['standard input:12 standard input:17']);
+        });
     });
 
     it('Parses flags', function () {

@@ -24,3 +24,7 @@ msgstr "Attribut title, en tant que texte brut"
 #: b
 msgid "X"
 msgstr "Y"
+
+#: standard input:12 standard input:17
+msgid "Z"
+msgstr "ZZ"
