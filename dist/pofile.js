@@ -290,7 +290,9 @@ PO.Item.prototype.toString = function () {
         lines.push('#: ' + ref);
     });
 
-    var flags = Object.keys(this.flags);
+    var flags = Object.keys(this.flags).filter(function (flag) {
+        return !!this.flags[flag];
+    }, this);
     if (flags.length > 0) {
         lines.push('#, ' + flags.join(','));
     }
