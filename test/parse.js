@@ -156,12 +156,12 @@ describe('Parse', function () {
             assert.equal(items[0].msgid, 'The name field must not contain characters like " or \\');
         });
 
-        it('should handle \n characters', function () {
+        it('should handle \\n characters', function () {
             var item = po.items[1];
             assert.equal(item.msgid, '%1$s\n%2$s %3$s\n%4$s\n%5$s');
         });
 
-        it('should handle \t characters', function () {
+        it('should handle \\t characters', function () {
             var item = po.items[2];
             assert.equal(item.msgid, 'define(\'some/test/module\', function () {\n' +
                 '\t\'use strict\';\n' +
