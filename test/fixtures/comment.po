@@ -1,6 +1,7 @@
 # French translation of Link (6.x-2.9)
 # Copyright (c) 2011 by the French translation team
 #
+#. extracted from test
 msgid ""
 msgstr ""
 "Project-Id-Version: Link (6.x-2.9)\n"

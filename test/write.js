@@ -74,6 +74,7 @@ describe('Write', function () {
         var input = fs.readFileSync(__dirname + '/fixtures/comment.po', 'utf8');
         var po = PO.parse(input);
         var str = po.toString();
+        assertHasLine(str, '#. extracted from test');
         assertHasLine(str, '#. Extracted comment');
     });
 

@@ -61,6 +61,9 @@ describe('Parse', function () {
         assert.notEqual(po, null);
         assert.equal(po.items.length, 2);
 
+        assert.equal(po.extractedComments.length, 1);
+        assert.equal(po.extractedComments[0], 'extracted from test');
+
         var item = po.items[0];
         assert.equal(item.msgid, 'Title, as plain text');
         assert.equal(item.msgstr, 'Attribut title, en tant que texte brut');
