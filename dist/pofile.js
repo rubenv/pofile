@@ -1,6 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"pofile":[function(require,module,exports){
-module.exports=require('W8CkM0');
-},{}],"W8CkM0":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"W8CkM0":[function(require,module,exports){
 var fs = require('fs');
 var isArray = require('lodash.isarray');
 
@@ -67,7 +65,12 @@ PO.parse = function (data) {
     data = data.replace(/\r\n/g, '\n');
     var po = new PO();
     var sections = data.split(/\n\n/);
-    var headers = sections.shift();
+    var headers = [sections.shift()];
+    //everything until the first 'msgid ""' is considered header
+    while (headers[headers.length - 1].indexOf('msgid ""') < 0) {
+        headers.push(sections.shift());
+    }
+    headers = headers.join('\n');
     var lines = sections.join('\n').split(/\n/);
 
     po.headers = {
@@ -331,7 +334,9 @@ PO.Item.prototype.toString = function () {
 
 module.exports = PO;
 
-},{"fs":3,"lodash.isarray":4}],3:[function(require,module,exports){
+},{"fs":3,"lodash.isarray":4}],"pofile":[function(require,module,exports){
+module.exports=require('W8CkM0');
+},{}],3:[function(require,module,exports){
 
 },{}],4:[function(require,module,exports){
 /**
