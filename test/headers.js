@@ -28,3 +28,46 @@ describe('Headers', function () {
         assert.equal(Object.keys(po.headers).length, 12);
     });
 });
+
+describe('PO files with no headers', function () {
+
+    it('Parses an empty string', function () {
+        var po = PO.parse('');
+        assert.notEqual(po, null);
+        // all headers should be empty
+        for (var key in po.headers) {
+            assert.equal(po.headers[key], '');
+        }
+        assert.equal(po.items.length, 0);
+    });
+
+    it('Parses a minimal example', function () {
+        var po = PO.parse('msgid "minimal PO"\nmsgstr ""');
+        assert.notEqual(po, null);
+        // all headers should be empty
+        for (var key in po.headers) {
+            assert.equal(po.headers[key], '');
+        }
+        assert.equal(po.items.length, 1);
+    });
+
+    describe('advanced example', function () {
+        var po;
+
+        before(function (done) {
+            PO.load(__dirname + '/fixtures/no_header.po', function (err, result) {
+                assert.equal(err, null);
+                po = result;
+                done();
+            });
+        });
+
+        it('Parses the po file', function () {
+            assert.notEqual(po, null);
+        });
+
+        it('Finds all items', function () {
+            assert.equal(po.items.length, 2);
+        });
+    });
+});
