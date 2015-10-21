@@ -81,7 +81,7 @@ po.save('out.po', function (err) {
 
 ### The PO.Item class
 
-The `PO` class exposes the following members:
+The `PO.Item` class exposes the following members:
 
 * `msgid`: The message id.
 * `msgid_plural`: The plural message id (null if absent).
