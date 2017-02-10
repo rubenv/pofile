@@ -46,7 +46,5 @@
     "grunt-jscs": "~3.0.1",
     "grunt-mocha-cli": "~3.0.0"
   },
-  "dependencies": {
-    "lodash.isarray": "~2.4.1"
-  }
+  "dependencies": {}
 }
