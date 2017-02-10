@@ -5,7 +5,7 @@ module.exports = (grunt) ->
     @loadNpmTasks('grunt-contrib-jshint')
     @loadNpmTasks('grunt-contrib-uglify')
     @loadNpmTasks('grunt-contrib-watch')
-    @loadNpmTasks('grunt-jscs-checker')
+    @loadNpmTasks('grunt-jscs')
     @loadNpmTasks('grunt-mocha-cli')
 
     @initConfig
@@ -42,8 +42,6 @@ module.exports = (grunt) ->
             dist:
                 files:
                     'dist/pofile.js': ['lib/po.js']
-                options:
-                    alias: 'lib/po.js:pofile'
 
         uglify:
             dist:
