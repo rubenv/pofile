@@ -16,6 +16,21 @@ function assertHasLine(str, line) {
     assert(found, 'Could not find line: ' + line);
 }
 
+function assertHasContiguousLines(str, assertedLines) {
+    var assertedLinesJoined = assertedLines.join('\n');
+
+    var trimmedStr = str
+        .split('\n')
+        .map(function (line) {
+            return line.trim();
+        })
+        .join('\n');
+
+    var found = trimmedStr.indexOf(assertedLinesJoined) !== -1;
+
+    assert(found, 'Could not find lines: \n' + assertedLinesJoined);
+}
+
 function assertDoesntHaveLine(str, line) {
     var lines = str.split('\n');
     var found = false;
@@ -101,6 +116,38 @@ describe('Write', function () {
         assertHasLine(str, '#~ msgstr "not sure"');
         assertHasLine(str, '#~ msgid "Second commented item"');
         assertHasLine(str, '#~ msgstr "also not sure"');
+    });
+
+    describe('plurals', function () {
+        it('should write multiple msgstrs', function () {
+            var input = fs.readFileSync(__dirname + '/fixtures/plural.po', 'utf8');
+            var po = PO.parse(input);
+            var str = po.toString();
+            assertHasContiguousLines(str, [
+                'msgstr[0] "1 source"',
+                'msgstr[1] "{{$count}} sources"'
+            ]);
+        });
+
+        it('should write msgstr[0] when there is no translation', function () {
+            var input = fs.readFileSync(__dirname + '/fixtures/plural.po', 'utf8');
+            var po = PO.parse(input);
+            var str = po.toString();
+            assertHasContiguousLines(str, [
+                'msgid_plural "{{$count}} destinations"',
+                'msgstr[0] ""'
+            ]);
+        });
+
+        it('should write msgstr[0] when there is no translation and empty plural translation is stored in msgstr ""', function () {
+            var input = fs.readFileSync(__dirname + '/fixtures/plural.po', 'utf8');
+            var po = PO.parse(input);
+            var str = po.toString();
+            assertHasContiguousLines(str, [
+                'msgid_plural "{{$count}} mistakes"',
+                'msgstr[0] ""'
+            ]);
+        });
     });
 
     describe('C-Strings', function () {
