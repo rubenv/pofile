@@ -119,34 +119,323 @@ describe('Write', function () {
     });
 
     describe('plurals', function () {
-        it('should write multiple msgstrs', function () {
-            var input = fs.readFileSync(__dirname + '/fixtures/plural.po', 'utf8');
-            var po = PO.parse(input);
-            var str = po.toString();
-            assertHasContiguousLines(str, [
-                'msgstr[0] "1 source"',
-                'msgstr[1] "{{$count}} sources"'
-            ]);
+        describe('nplurals INTEGER', function () {
+            it('should write 2 msgstrs when formatted correctly', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/messages.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} things"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""'
+                ]);
+            });
+
+            it('should write 2 msgstrs when formatted incorrectly', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/messages.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} mistakes"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""'
+                ]);
+            });
         });
 
-        it('should write msgstr[0] when there is no translation', function () {
-            var input = fs.readFileSync(__dirname + '/fixtures/plural.po', 'utf8');
-            var po = PO.parse(input);
-            var str = po.toString();
-            assertHasContiguousLines(str, [
-                'msgid_plural "{{$count}} destinations"',
-                'msgstr[0] ""'
-            ]);
+        describe('nplurals missing', function () {
+            it('should write 2 msgstrs when formatted correctly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-missing.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} things"',
+                    'msgstr[0] "1 thing"',
+                    'msgstr[1] "{{$count}} things"'
+                ]);
+            });
+
+            it('should write 2 msgstrs when formatted correctly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-missing.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other things"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""',
+                ]);
+            });
+
+            it('should keep same number of msgstrs when formatted incorrectly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-missing.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} mistakes"',
+                    'msgstr[0] "1 mistake"',
+                    '',
+                    '# incorrect plurals, with no translation'
+                ]);
+            });
+
+            it('should write 2 msgstrs when formatted incorrectly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-missing.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other mistakes"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""'
+                ]);
+            });
         });
 
-        it('should write msgstr[0] when there is no translation and empty plural translation is stored in msgstr ""', function () {
-            var input = fs.readFileSync(__dirname + '/fixtures/plural.po', 'utf8');
-            var po = PO.parse(input);
-            var str = po.toString();
-            assertHasContiguousLines(str, [
-                'msgid_plural "{{$count}} mistakes"',
-                'msgstr[0] ""'
-            ]);
+        describe('nplurals=1', function () {
+            it('should write 1 msgstr when formatted correctly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-1.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} things"',
+                    'msgstr[0] "{{$count}} thing"'
+                ]);
+            });
+
+            it('should write 1 msgstr when formatted correctly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-1.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other things"',
+                    'msgstr[0] ""',
+                    '',
+                    '# incorrect plurals, with translation'
+                ]);
+            });
+
+            it('should keep same number of msgstrs when formatted incorrectly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-1.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} mistakes"',
+                    'msgstr[0] "1 mistake"',
+                    'msgstr[1] "{{$count}} mistakes"'
+                ]);
+            });
+
+            it('should write 1 msgstr when formatted incorrectly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-1.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other mistakes"',
+                    'msgstr[0] ""'
+                ]);
+            });
+        });
+
+        describe('nplurals=2', function () {
+            it('should write 2 msgstrs when formatted correctly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-2.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} things"',
+                    'msgstr[0] "1 thing"',
+                    'msgstr[1] "{{$count}} things"'
+                ]);
+            });
+
+            it('should write 2 msgstrs when formatted correctly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-2.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other things"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""',
+                ]);
+            });
+
+            it('should keep same number of msgstrs when formatted incorrectly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-2.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} mistakes"',
+                    'msgstr[0] "1 mistake"',
+                    '',
+                    '# incorrect plurals, with no translation'
+                ]);
+            });
+
+            it('should write 2 msgstrs when formatted incorrectly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-2.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other mistakes"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""'
+                ]);
+            });
+        });
+
+        describe('nplurals=3', function () {
+            it('should write 3 msgstrs when formatted correctly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-3.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} things"',
+                    'msgstr[0] "1 thing"',
+                    'msgstr[1] "{{$count}} things"',
+                    'msgstr[2] "{{$count}} things"'
+                ]);
+            });
+
+            it('should write 3 msgstrs when formatted correctly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-3.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other things"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""',
+                    'msgstr[2] ""'
+                ]);
+            });
+
+            it('should keep same number of msgstrs when formatted incorrectly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-3.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} mistakes"',
+                    'msgstr[0] "1 mistake"',
+                    'msgstr[1] "{{$count}} mistakes"',
+                    '',
+                    '# incorrect plurals, with no translation'
+                ]);
+            });
+
+            it('should write 3 msgstrs when formatted incorrectly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-3.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other mistakes"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""',
+                    'msgstr[2] ""'
+                ]);
+            });
+        });
+
+        describe('nplurals=6', function () {
+            it('should write 6 msgstrs when formatted correctly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-6.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} things"',
+                    'msgstr[0] "1 thing"',
+                    'msgstr[1] "{{$count}} things"',
+                    'msgstr[2] "{{$count}} things"',
+                    'msgstr[3] "{{$count}} things"',
+                    'msgstr[4] "{{$count}} things"',
+                    'msgstr[5] "{{$count}} things"'
+                ]);
+            });
+
+            it('should write 6 msgstrs when formatted correctly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-6.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other things"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""',
+                    'msgstr[2] ""',
+                    'msgstr[3] ""',
+                    'msgstr[4] ""',
+                    'msgstr[5] ""'
+                ]);
+            });
+
+            it('should keep same number of msgstrs when formatted incorrectly with translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-6.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} mistakes"',
+                    'msgstr[0] "1 mistake"',
+                    'msgstr[1] "{{$count}} mistakes"',
+                    'msgstr[2] "{{$count}} mistakes"',
+                    '',
+                    '# incorrect plurals, with no translation'
+                ]);
+            });
+
+            it('should write 6 msgstrs when formatted incorrectly with no translation', function () {
+                var input = fs.readFileSync(
+                    __dirname + '/fixtures/plurals/nplurals-6.po', 'utf8'
+                );
+                var po = PO.parse(input);
+                var str = po.toString();
+                assertHasContiguousLines(str, [
+                    'msgid_plural "{{$count}} other mistakes"',
+                    'msgstr[0] ""',
+                    'msgstr[1] ""',
+                    'msgstr[2] ""',
+                    'msgstr[3] ""',
+                    'msgstr[4] ""',
+                    'msgstr[5] ""'
+                ]);
+            });
         });
     });
 
