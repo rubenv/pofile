@@ -42,6 +42,9 @@ module.exports = (grunt) ->
             dist:
                 files:
                     'dist/pofile.js': ['lib/po.js']
+                options:
+                    alias:
+                        pofile: './lib/po.js'
 
         uglify:
             dist:
