@@ -20,6 +20,7 @@
     "url": "http://github.com/rubenv/pofile.git"
   },
   "main": "./lib/po",
+  "types": "./pofile.d.ts",
   "keywords": [
     "i18n",
     "l10n",
