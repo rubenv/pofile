@@ -1,15 +1,15 @@
-declare namespace pofile {
-    export function parse(data: string): PO;
-    export function load(fileName: string, callback: (err: NodeJS.ErrnoException | null, po: PO) => void): void;
+declare module pofile {
+    function parse(data: string): PO;
+    function load(fileName: string, callback: (err: NodeJS.ErrnoException | null, po: PO) => void): void;
 
-    interface PO {
-        comments: string[];
-        extractedComments: string[];
-        items: Item[];
-        headers: Partial<IHeaders>
+    class PO {
+        public comments: string[];
+        public extractedComments: string[];
+        public items: Item[];
+        public headers: Partial<IHeaders>
 
-        save(filename: string, callback: (err?: NodeJS.ErrnoException) => void): void;
-        toString(): string;
+        public save(filename: string, callback: (err?: NodeJS.ErrnoException) => void): void;
+        public toString(): string;
     }
 
     interface IHeaders {
@@ -41,4 +41,4 @@ declare namespace pofile {
     }
 }
 
-export = pofile;
+export = pofile
