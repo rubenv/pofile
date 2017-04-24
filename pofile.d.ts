@@ -1,8 +1,8 @@
-declare module "pofile" {
-    class PO {
-        public static parse(data: string): PO;
-        public static load(fileName: string, callback: (err: NodeJS.ErrnoException | null, po: PO) => void): void;
+declare module pofile {
+    function parse(data: string): PO;
+    function load(fileName: string, callback: (err: NodeJS.ErrnoException | null, po: PO) => void): void;
 
+    class PO {
         public comments: string[];
         public extractedComments: string[];
         public items: Item[];
@@ -39,6 +39,6 @@ declare module "pofile" {
 
         public toString(): string;
     }
-
-    export = PO;
 }
+
+export = pofile
