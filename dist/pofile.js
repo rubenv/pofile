@@ -316,6 +316,15 @@ PO.Item.prototype.toString = function () {
         return lines;
     };
 
+    //handle \n in single-line texts (can not be handled in _escape)
+    var _processLineBreak = function (keyword, text, index) {
+        var processed = _process(keyword, text, index);
+        for (var i = 1; i < processed.length - 1; i++) {
+            processed[i] = processed[i].slice(0, -1) + '\\n"';
+        }
+        return processed;
+    };
+
     // https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html
     // says order is translator-comments, extracted-comments, references, flags
 
@@ -351,7 +360,8 @@ PO.Item.prototype.toString = function () {
 
             if (Array.isArray(text) && text.length > 1) {
                 text.forEach(function (t, i) {
-                    lines = lines.concat(mkObsolete + _process(keyword, t, i));
+                    var processed = _processLineBreak(keyword, t, i);
+                    lines = lines.concat(mkObsolete + processed.join('\n' + mkObsolete));
                 });
             } else if (self.msgid_plural && keyword === 'msgstr' && !hasTranslation) {
                 for (var pluralIndex = 0; pluralIndex < self.nplurals; pluralIndex++) {
@@ -362,11 +372,7 @@ PO.Item.prototype.toString = function () {
                     0 :
                     undefined;
                 text = Array.isArray(text) ? text.join() : text;
-                var processed = _process(keyword, text, index);
-                //handle \n in single-line texts (can not be handled in _escape)
-                for (var i = 1; i < processed.length - 1; i++) {
-                    processed[i] = processed[i].slice(0, -1) + '\\n"';
-                }
+                var processed = _processLineBreak(keyword, text, index);
                 lines = lines.concat(mkObsolete + processed.join('\n' + mkObsolete));
             }
         }
