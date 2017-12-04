@@ -215,6 +215,7 @@ PO.parse = function (data) {
         } else if (line.match(/^msgctxt/)) { // Context
             finish();
             item.msgctxt = extract(line);
+            context = 'msgctxt';
             noCommentLineCount++;
         } else { // Probably multiline string or blank
             if (line.length > 0) {
@@ -225,6 +226,8 @@ PO.parse = function (data) {
                     item.msgid += extract(line);
                 } else if (context === 'msgid_plural') {
                     item.msgid_plural += extract(line);
+                } else if (context === 'msgctxt') {
+                    item.msgctxt += extract(line);
                 }
             }
         }
