@@ -1,7 +1,7 @@
 {
   "name": "pofile",
   "description": "Parse and serialize Gettext PO files.",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": {
     "name": "Ruben Vermeersch",
     "email": "ruben@savanne.be",
