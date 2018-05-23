@@ -504,4 +504,26 @@ describe('Write', function () {
             assert.ok(po.toString().indexOf('msgctxt') >= 0);
         });
     });
+
+    it('should keep the header order', function () {
+        var input = fs.readFileSync(__dirname + '/fixtures/big.po', 'utf8');
+        var po = PO.parse(input);
+        var str = po.toString();
+
+        assertHasContiguousLines(str, [
+            'msgid ""',
+            'msgstr ""',
+            '"Project-Id-Version: Link (6.x-2.9)\\n"',
+            '"POT-Creation-Date: 2011-12-31 23:39+0000\\n"',
+            '"PO-Revision-Date: 2013-12-17 14:21+0100\\n"',
+            '"Language-Team: French\\n"',
+            '"MIME-Version: 1.0\\n"',
+            '"Content-Type: text/plain; charset=UTF-8\\n"',
+            '"Content-Transfer-Encoding: 8bit\\n"',
+            '"Plural-Forms: nplurals=2; plural=(n > 1);\\n"',
+            '"Last-Translator: Ruben Vermeersch <ruben@rocketeer.be>\\n"',
+            '"Language: fr\\n"',
+            '"X-Generator: Poedit 1.6.2\\n"',
+        ]);
+    });
 });
