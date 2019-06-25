@@ -1,4 +1,3 @@
-// tslint:disable
 declare interface IHeaders {
     'Project-Id-Version': string;
     'Report-Msgid-Bugs-To': string;
