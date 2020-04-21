@@ -36,7 +36,7 @@ declare class PO {
     public static parse(data: string): PO;
     public static parsePluralForms(forms: string): PO;
     public static load(fileName: string, callback: (err: NodeJS.ErrnoException, po: PO) => void): void;
-    public static Item: Item;
+    public static Item: typeof Item;
 
     public save(fileName: string, callback: (err: NodeJS.ErrnoException) => void): void;
     public toString(): string;
