@@ -70,4 +70,24 @@ describe('PO files with no headers', function () {
             assert.equal(po.items.length, 2);
         });
     });
+
+    describe('advanced example with extra spaces', function () {
+        var po;
+
+        before(function (done) {
+            PO.load(__dirname + '/fixtures/no_header_extra_spaces.po', function (err, result) {
+                assert.equal(err, null);
+                po = result;
+                done();
+            });
+        });
+
+        it('Parses the po file', function () {
+            assert.notEqual(po, null);
+        });
+
+        it('Finds all items', function () {
+            assert.equal(po.items.length, 2);
+        });
+    });
 });

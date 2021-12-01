@@ -83,7 +83,7 @@ PO.parse = function (data) {
     var headers = [];
     //everything until the first 'msgid ""' is considered header
     while (sections[0] && (headers.length === 0 || headers[headers.length - 1].indexOf('msgid ""') < 0)) {
-        if (sections[0].match(/msgid "[^"]/)) {
+        if (sections[0].match(/msgid\s+"[^"]/)) {
             //found first real string, adding a dummy header item
             headers.push('msgid ""');
         } else {
