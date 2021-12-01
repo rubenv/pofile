@@ -53,7 +53,7 @@ module.exports = (grunt) ->
 
         bump:
             options:
-                files: ['package.json', 'bower.json']
+                files: ['package.json', 'package-lock.json', 'bower.json']
                 commitFiles: ['-a']
                 pushTo: 'origin'
 
