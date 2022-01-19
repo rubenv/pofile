@@ -21,8 +21,8 @@ declare class Item {
     public comments: string[];
     public extractedComments: string[];
     public flags: Record<string, boolean | undefined>;
+    public obsolete: boolean;
     private nplurals: number;
-    private obsolete: boolean;
 
     public toString(): string;
 }
