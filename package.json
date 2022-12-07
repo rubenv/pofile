@@ -46,7 +46,7 @@
     "grunt-contrib-uglify": "~2.1.0",
     "grunt-contrib-watch": "~1.1.0",
     "grunt-jscs": "~3.0.1",
-    "grunt-mocha-cli": "~3.0.0"
+    "grunt-mocha-cli": "~7.0.0"
   },
   "dependencies": {}
 }
