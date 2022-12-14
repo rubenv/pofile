@@ -15,6 +15,7 @@
     "Sander Houttekier"
   ],
   "homepage": "http://github.com/rubenv/pofile",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/rubenv/pofile.git"
