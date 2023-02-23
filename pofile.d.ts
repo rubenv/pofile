@@ -14,9 +14,9 @@ declare interface IHeaders {
 
 declare class Item {
     public msgid: string;
-    public msgctxt?: string;
+    public msgctxt?: string | null | undefined;
     public references: string[];
-    public msgid_plural?: string;
+    public msgid_plural?: string | null | undefined;
     public msgstr: string[];
     public comments: string[];
     public extractedComments: string[];
